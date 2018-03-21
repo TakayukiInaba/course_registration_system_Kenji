@@ -27,21 +27,13 @@ class IndexController extends Controller
         
             foreach($terms as $term){
                 foreach($times as $time){
-                    $entries += array( $term->id.$time->id => array( "term"=>$term->id,
-                                                                     "time"=>$time->id,
-                                                                     "title"=>'登録なし',
-                                                                     "grade"=>'登録なし',
-                                                                     "level"=>'登録なし',
-                                                                     "teacher"=>'登録なし',
-                                                                     "fee"=>'登録なし',
-                                                                     "summary"=>'登録なし', ));
+                    $entries += array( $term->id.$time->id => array("id"=>"0","title"=>'登録なし'));
                     if($items->isNotEmpty()){
                         foreach($items as $item){
                             if($item->getCourseTerm() == $term->value and $item->getCourseTime() == $time->value)
                             {
-                                $entries[$term->id.$time->id] = ["term"=>$term->id,
-                                                                 "time"=>$time->id,
-                                                                 "title"=>$item->getCourseTitle(),
+                                $entries[$term->id.$time->id] = ["id"=>$item->course_id,
+                                                                "title"=>$item->getCourseTitle(),
                                                                  "grade"=>$item->getCourseGrade(),
                                                                  "level"=>$item->getCourseLevel(),
                                                                  "teacher"=>$item->getCourseTeacher(),
@@ -118,14 +110,44 @@ class IndexController extends Controller
     /**
     * 単品での新規登録・更新
     */
-    public function singleEntry($term,$time)
+    public function singleEntry($term,$time,$id)
     {
+        //特定の期間、時限の講座一覧を表示させるためのデータ
         $items = Course::where('term_id',$term)->where('time_id',$time)->with(
             ['term','time','grade','level','subject','teacher'])->get();
+        
         $term = Term::find($term);
         $time = Time::find($time);
 
-        return view('student.singleEntry',['items'=>$items,'term'=>$term,'time'=>$time,]);        
+        return view('student.singleEntry',['items'=>$items,'id'=>$id,
+                                            'term'=>$term,'time'=>$time,]);        
+    }
+
+    public function postSingleEntry(Request $request)
+    {
+        $student = auth()->user();
+        $entryId = $request->input('entry');//entry
+        $entryTerm = $request->input('entryTerm');
+        $entryTime = $request->input('entryTime');
+
+        $targetRecord = Entry::where('student_id',$student)->where('term_id',$entryTerm)->where('time_id',$entryTime)->get();
+        if ($targetRecord->isEmpty())
+        {
+            //新規登録処理
+            $entry = new Entry;
+            $params = array();
+            $params[] = ['student_id'=>$student->id,'term_id'=>$entryTerm,'time_id'=>$entryTime,'course_id'=>$entryId,]; 
+            $entry->fill($params)->save(); 
+
+        }else{
+            //更新処理
+            $params = array();
+            $params[] = ['student_id'=>$student->id,'term_id'=>$entryTerm,'time_id'=>$entryTime,'course_id'=>$entryId,]; 
+            $targetRecord->fill($params)->save();
+        }
+        
+        return view('student.PostEntry');   
+
     }
 
 }

@@ -45,6 +45,7 @@ Route::prefix('student')->namespace('Student')->as('student.')->group(function()
     Route::get('entry','IndexController@entry')->name('entry');
     Route::post('entry','IndexController@confirm');
     Route::post('postEntry','IndexController@postEntry');
-    Route::get('entry/{term}/{time}','IndexController@singleEntry')->name('singleEntry');
+    Route::get('entry/{term}/{time}/{id}','IndexController@singleEntry');
+    Route::post('singleEntry','IndexController@postSingleEntry');
     });
 });

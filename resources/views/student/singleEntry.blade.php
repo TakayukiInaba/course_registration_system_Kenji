@@ -1,7 +1,7 @@
 ﻿@extends('layouts.main')
 
 @section('content')
-<div class="container-fluid">
+<div action="singleEntry" class="container-fluid">
     <form  method="POST">
     {{ csrf_field() }}
         <table class="table table-hover table-sm text-center">
@@ -25,10 +25,10 @@
                     <tr>
                         <div class="form-check">
                             <td>
-                                <input class="form-check-input" id="no_entry" type="radio" checked="checked"  name="entries[{{ $term->id.$time->id }}]" value="0">
+                                <input class="form-check-input" id="0" type="radio" name="entry" value="0" @if($id=='0') checked="checked" @endif >
                             </td>
                             <td colspan="5">
-                                <label class="form-check-label" for="no_entry">
+                                <label class="form-check-label" for="0">
                                     ☜この期間に講座を受講しない場合は、左のチェックを入れてください。
                                 </label>
                             </td>
@@ -39,14 +39,13 @@
                     <tr>
                         <div class="form-check">
                             <td>
-                                <input class="form-check-input" id="{{$item->id}}" type="radio" name="entries[{{ $term->id.$time->id }}]" value="{{ $item->id }}">
+                                <input class="form-check-input" id="{{$item->id}}" type="radio" name="entry" value="{{ $item->id }}" @if($item->id==$id)checked="checked"@endif>
                             </td>
                             <td><label class="form-check-label" for="{{$item->id}}">{{ $item->title}}</label></td>
                             <td><label class="form-check-label" for="{{$item->id}}">{{ $item->getGradeVal() }}</lavel></td>
                             <td><label class="form-check-label" for="{{$item->id}}">{{ $item->getLevelVal() }}</lavel></td>
                             <td><label class="form-check-label" for="{{$item->id}}">{{ $item->getTeacherVal() }}</lavel></td>
-                            <td><label class="form-check-label" for="{{$item->id}}">{{ $item->getTermVal()}}</label></td>
-                            <td><label class="form-check-label" for="{{$item->id}}">{{ $item->getTimeVal()}}</label></td>
+                        
                         </div>
                         <td>
                             <button type="button" class="btn btn-default" data-toggle="modal" data-target="#{{$item->title}}">
@@ -60,7 +59,9 @@
             </tbody>
         </table>
 
-        
+        <input type="hidden" name="entryTerm" value="{{$term->id}}"/>
+        <input type="hidden" name="entryTime" value="{{$time->id}}"/>
+
         <div class="row justify-content-center ">
                 <div class="col-2">
                     <button type="submit" class="btn btn-primary btn-block" >登録</button>

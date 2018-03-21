@@ -36,18 +36,12 @@
             </div>
 
             @foreach($times as $time)
-                @empty($items)
-                    <a href="#"class="" data-toggle="modal" data-target='#{{$entries[$term->id.$time->id]["title"]}}'>
-                        登録はありません
-                    </div></a>
-                @else
                     <div class="col"  style="border:solid 1px">
-                        <a href="#"class="" data-toggle="modal" data-target='#{{$entries[$term->id.$time->id]["title"]}}'>
+                        <a href="#"class="" data-toggle="modal" data-target='#{{$term->id.$time->id}}'>
                             {{ $entries[$term->id.$time->id]["title"] }}
                         </a>
                         @include('components.studentModal')
                     </div>
-                @endempty
             @endforeach     
         </div>
     @endforeach
