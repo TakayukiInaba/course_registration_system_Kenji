@@ -23,10 +23,38 @@ class IndexController extends Controller
         $student = auth()->user();
         $items = Entry::where('student_id',$student->student_id)->with(
             ['term','time','course.grade','course.level','course.subject','course.teacher'])->get();
+        $entries = array();
         
-        $items = $items->toArray();
-        //$test = $items->where("term_id",1)->get('term_id','出てきませんね。');
-        return view('student.index',['items'=> $items,'student'=>$student,'terms'=>$terms,'times'=>$times]);
+            foreach($terms as $term){
+                foreach($times as $time){
+                    $entries += array( $term->id.$time->id => array( "term"=>$term->id,
+                                                                     "time"=>$time->id,
+                                                                     "title"=>'登録なし',
+                                                                     "grade"=>'登録なし',
+                                                                     "level"=>'登録なし',
+                                                                     "teacher"=>'登録なし',
+                                                                     "fee"=>'登録なし',
+                                                                     "summary"=>'登録なし', ));
+                    if($items->isNotEmpty()){
+                        foreach($items as $item){
+                            if($item->getCourseTerm() == $term->value and $item->getCourseTime() == $time->value)
+                            {
+                                $entries[$term->id.$time->id] = ["term"=>$term->id,
+                                                                 "time"=>$time->id,
+                                                                 "title"=>$item->getCourseTitle(),
+                                                                 "grade"=>$item->getCourseGrade(),
+                                                                 "level"=>$item->getCourseLevel(),
+                                                                 "teacher"=>$item->getCourseTeacher(),
+                                                                 "fee"=>$item->getCourseFee(),
+                                                                 "summary"=>$item->getCourseSummary(),];
+                                break; 
+                            }
+                        }
+                    }
+                }
+            }
+        
+        return view('student.index',['items'=> $items,'entries'=> $entries,'student'=>$student,'terms'=>$terms,'times'=>$times]); 
     }
 
      //

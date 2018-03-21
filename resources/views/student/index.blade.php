@@ -18,7 +18,7 @@
     <div class="col-sm-10 order-2">
     <div class="row" style="border:solid 1px;border-bottom:none">
         <div class="col">
-           時間割
+            時間割
         </div>
         @foreach($times as $time)
             <div class="col"style="border:solid 1px">
@@ -36,21 +36,21 @@
             </div>
 
             @foreach($times as $time)
-               
+                @empty($items)
+                    <a href="#"class="" data-toggle="modal" data-target='#{{$entries[$term->id.$time->id]["title"]}}'>
+                        登録はありません
+                    </div></a>
+                @else
                     <div class="col"  style="border:solid 1px">
-                        <a href="#"class="" data-toggle="modal" data-target='#{{$term.$time}}'>
-                            
+                        <a href="#"class="" data-toggle="modal" data-target='#{{$entries[$term->id.$time->id]["title"]}}'>
+                            {{ $entries[$term->id.$time->id]["title"] }}
                         </a>
-                        
-                    </div> 
-               
+                        @include('components.studentModal')
+                    </div>
+                @endempty
             @endforeach     
         </div>
-        
-        
     @endforeach
-    {{var_dump($items)}}
     </div>
-    
 </div>
 @endsection
