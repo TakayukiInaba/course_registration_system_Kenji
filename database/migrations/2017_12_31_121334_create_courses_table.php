@@ -24,6 +24,7 @@ class CreateCoursesTable extends Migration
             $table->string('summary',100);
             $table->unsignedTinyInteger('teacher_id');
             $table->unsignedMediumInteger('fee');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

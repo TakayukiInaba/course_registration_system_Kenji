@@ -8,22 +8,29 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{asset('/css/bootstrap/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('/css/style.css')}}">
   </head>
   <body>
- 　 <div class="card">
-        <h3 class="card-header">進学講習登録システム</h5>
-        <div class="card-body">
-                
-        @yield('content')
-               
-        </div>
-        
-        <div class="card-footer text-center">
-            <small>Copyright © SEIJOGAKKO. All Rights Reserved.</small>
-        </div>
-    </div>
+    <nav class="navbar navbar-expand navbar-dark fixed-top">
+      <a class="navbar-brand" href="{{route('top')}}">進学講習システム</a>
+      <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="ナビゲーションの切替">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <span class="navbar-text ml-auto">
+          <a class="nav-item nav-link btn btn-outline-light" href="#">ログアウト</a>
+        </span>
+      </div>
+    </nav>
 
-   
+    <div class="container-fluid">
+        @yield('content')
+    </div>
+              
+    <footer class="footer text-light">
+            <small>Copyright © SEIJOGAKKO. All Rights Reserved.</small>
+    </footer>
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

@@ -15,15 +15,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-Route::get('course','CourseController@index')->middleware('auth');
-Route::get('add','CourseController@add')->middleware('auth');
-Route::post('add','CourseController@addpost')->middleware('auth');
-Route::get('edit/{id}','CourseController@edit')->middleware('auth');
-Route::post('update','CourseController@update')->middleware('auth');
-Route::get('table','CourseController@table')->middleware('auth');
-Route::post('table','CourseController@tablepost')->middleware('auth');
+Route::middleware('auth')->group(function(){
+Route::get('course','CourseController@index')->name('top');;
+Route::get('add','CourseController@add');
+Route::post('add','CourseController@addpost');
+Route::get('edit/{id}','CourseController@edit');
+Route::post('update','CourseController@update');
+Route::get('table','CourseController@table');
+Route::post('table','CourseController@tablepost');
+Route::get('list','CourseController@list')->name('list');
+Route::get('list/{id}','CourseController@postList');
+Route::get('cancel','CourseController@cancel')->name('cancel');
+Route::post('cancel','CourseController@confirmCancel');
+Route::post('postCancel','CourseController@postCancel');
 Route::get('/home', 'HomeController@index')->name('home');
+});
 Auth::routes();
 
 //生徒ページ用ルーティング
@@ -46,6 +52,6 @@ Route::prefix('student')->namespace('Student')->as('student.')->group(function()
     Route::post('entry','IndexController@confirm');
     Route::post('postEntry','IndexController@postEntry');
     Route::get('entry/{term}/{time}/{id}','IndexController@singleEntry');
-    Route::post('singleEntry','IndexController@postSingleEntry');
+    Route::post('entry/{term}/{time}/{id}','IndexController@postSingleEntry');
     });
 });

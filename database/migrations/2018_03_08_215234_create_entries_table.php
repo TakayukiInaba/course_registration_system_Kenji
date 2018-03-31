@@ -19,6 +19,7 @@ class CreateEntriesTable extends Migration
             $table->unsignedTinyInteger('term_id');
             $table->unsignedTinyInteger('time_id');
             $table->unsignedTinyInteger('course_id');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -2,19 +2,17 @@
 
 @section('title','教員用トップページ')
 @section('content')
-<!--ログイン処理を経ているか否かによって画面表示を切り替える-->
-<div class="container-fluid">      
+<!--ログイン処理を経ているか否かによって画面表示を切り替える-->     
 <div class="row">
     <!--メニューリスト-->  
-    <div class="col-sm-2 order-1" style="height:250px">
+    <div class="sidebar col-sm-2 order-1">
         <h6>こんにちは{{$first_name}}さん。</h6>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item"><a href="{{url('add')}}">講座登録/修正</a></li>
-            <li class="list-group-item"><a href="{{url('table')}}">時間割作成</a></li>
-            <li class="list-group-item">担当講座表示</li>
-            <li class="list-group-item">名簿表示・作成</li>
-        </ul>
-    
+        <div class="list-group">
+            <a class="list-group-item list-group-item-action" href="{{url('add')}}">講座登録/修正</a>
+            <a class="list-group-item list-group-item-action" href="{{url('table')}}">時間割作成</a>
+            <a class="list-group-item list-group-item-action" href="{{url('list')}}">名簿表示</a>
+            <a class="list-group-item list-group-item-action" href="{{url('cancel')}}">講座取り消し</a>
+        </div>
     </div>
 
     <!--講座一覧(userの教科のみ)-->  
@@ -51,7 +49,6 @@
                                 @include('components.modal',['summary'=>'{{$item->summary}}','title'=>"{{$item->title}}"])
                             </td>
                         </tr>
-
                     @endforeach
                 @else
                     </tbody>
@@ -61,6 +58,5 @@
             </tbody>
         </table>
     </div>
-</div>
 </div>
 @endsection

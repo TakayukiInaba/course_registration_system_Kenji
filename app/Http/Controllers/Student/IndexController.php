@@ -126,28 +126,17 @@ class IndexController extends Controller
     public function postSingleEntry(Request $request)
     {
         $student = auth()->user();
-        $entryId = $request->input('entry');//entry
+        $entryId = $request->input('entry');
         $entryTerm = $request->input('entryTerm');
         $entryTime = $request->input('entryTime');
 
-        $targetRecord = Entry::where('student_id',$student)->where('term_id',$entryTerm)->where('time_id',$entryTime)->get();
-        if ($targetRecord->isEmpty())
+        if($entryId=='0')
         {
-            //新規登録処理
-            $entry = new Entry;
-            $params = array();
-            $params[] = ['student_id'=>$student->id,'term_id'=>$entryTerm,'time_id'=>$entryTime,'course_id'=>$entryId,]; 
-            $entry->fill($params)->save(); 
-
+           Entry::where('student_id',$student->id)->where('term_id',$entryTerm)->where('time_id',$entryTime)->delete();    
         }else{
-            //更新処理
-            $params = array();
-            $params[] = ['student_id'=>$student->id,'term_id'=>$entryTerm,'time_id'=>$entryTime,'course_id'=>$entryId,]; 
-            $targetRecord->fill($params)->save();
+           Entry::updateOrCreate(['student_id'=>$student->id,'term_id'=>$entryTerm,'time_id'=>$entryTime],['course_id'=>$entryId,]);
         }
-        
-        return view('student.PostEntry');   
-
+        return view('student.postEntry');   
     }
 
 }

@@ -25,8 +25,8 @@ class DatabaseSeeder extends Seeder
              'email'     => 'bainabainabaina1783@gmail.com',
              'student_id' => '1', 
             ]);
-        factory(App\Student::class,9)->create();
-
+        factory(App\Student::class,1000)->create();
+        factory(App\Entry::class,2000)->create();
         factory(App\Course::class,200)->create();
 
         // $this->call(UsersTableSeeder::class);

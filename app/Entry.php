@@ -3,15 +3,17 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Entry extends Model
 {
+    use SoftDeletes;
     //
     protected $fillable = [
         'student_id','course_id','term_id','time_id','created_at' , 'updated_at'
     ];
 
-    //リレーション作成
+    //講座マスタとのリレーション作成
     public function course(){
         return $this->belongsTo('App\Course');
     }
@@ -48,4 +50,19 @@ class Entry extends Model
     public function getCourseFee(){
         return $this->course->fee;
     }
+
+    //生徒マスタとのリレーション作成
+    public function student(){
+        return $this->belongsTo('App\Student');
+    }
+    public function getStudentId(){
+        return $this->student->student_id;
+    }
+    public function getStudentName(){
+        return $this->student->name;
+    }
+    public function getStudentFirstName(){
+        return $this->student->first_name;
+    }
+
 }

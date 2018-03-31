@@ -20,7 +20,7 @@
 
 
 <!--formの設定についてはApp\couposers\formcomposerを参照せよ。-->
-<form action="/laravelapp/public/add" method="POST">
+<form action="{{url('add')}}" method="POST">
 {{ csrf_field() }}
 
     <div class="form-row">

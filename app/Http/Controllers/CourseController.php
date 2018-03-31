@@ -12,6 +12,7 @@ use App\Level;
 use App\Teacher;
 use App\User;
 use App\Course;
+use App\Entry;
 
 use Validator;
 
@@ -99,5 +100,44 @@ class CourseController extends Controller
         return view('course.tablepost',['terms'=>$terms,'times'=>$times,'items'=>$items,]);
     }
     
+    public function list(Request $request){
+            $user = Auth::user();
+            $items = Course::where('subject_id',$user->subject_id)->orderBy('term_id', 'asc')->orderBy('time_id', 'asc')->withCount('entries')->get();
+            return view('course.list',['items'=> $items]);  
+    }
+
+    public function postList($id){
+        $user = Auth::user();
+        $items = Course::where('id',$id)->with('entries.student')->get();
+        return view('course.postList',['items'=> $items]);  
+    }
+
+    public function cancel(){
+        $user = Auth::user();
+        $items = Course::where('subject_id',$user->subject_id)->orderBy('term_id', 'asc')->orderBy('time_id', 'asc')->withCount('entries')->get();
+        return view('course.cancel',['items'=> $items]); 
+    }   
+
+    public function confirmCancel(Request $request){
+        $cancels = array();
+        foreach ($request->input('cancelnums') as $cancelNum)
+        {
+             $cancels[] = Course::find($cancelNum);  
+        }
+        return view('course.confirm',['cancels'=>$cancels,]);
+    }
+
+    public function postCancel(Request $request){
+        foreach ($request->input('cancelNums') as $cancelNum)
+        {
+            //entriesテーブルの処理
+            //courseテーブルの処理
+            Entry::where('course_id',$cancelNum)->delete();    
+            Course::where('id',$cancelNum)->delete();    
+        }
+        
+        $message = '削除が完了しました。';
+        return view('components.thanks',['message'=>$message,]);     
+    }  
 
 }

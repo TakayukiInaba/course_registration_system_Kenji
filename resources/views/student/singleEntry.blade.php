@@ -1,7 +1,7 @@
 ﻿@extends('layouts.main')
 
 @section('content')
-<div action="singleEntry" class="container-fluid">
+<div  class="container-fluid">
     <form  method="POST">
     {{ csrf_field() }}
         <table class="table table-hover table-sm text-center">
@@ -25,7 +25,7 @@
                     <tr>
                         <div class="form-check">
                             <td>
-                                <input class="form-check-input" id="0" type="radio" name="entry" value="0" @if($id=='0') checked="checked" @endif >
+                                <input class="form-check-input" id="0" type="radio" name="entry" value="0" @if($id=='0') checked="checked" disabled @endif >
                             </td>
                             <td colspan="5">
                                 <label class="form-check-label" for="0">

@@ -3,10 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Course extends Model
 {
-    
+    use SoftDeletes;
     protected $guarded = array('id');
 
     //バリデーションルールとメッセージ
@@ -85,11 +86,18 @@ class Course extends Model
 
 
     //userテーブル
-    public function User(){
+    public function user(){
         return $this->belongsTo('App\User');
     }
     public function getUserFstName(){
         return $this->user->first_name;
+    }
+
+    /*
+    *各講座にエントリーしている全生徒を関連付ける
+    */
+    public function entries(){
+        return $this->hasMany('App\Entry');
     }
 
 

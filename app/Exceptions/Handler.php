@@ -56,8 +56,11 @@ class Handler extends ExceptionHandler
         if ($request->expectsJson()){
             return response()->json(['message'=>$exception->getMessage()],401);   
         }
-        $route = ($guard = $exception->guards()[0]) ? $guard .'.login': 'login';
-        return redirect()->guest(route($route));
-        
+        //$route = ($guard = $exception->guards()[0]) ? $guard .'.login': 'login';
+        //return redirect()->guest(route($route));
+        if (in_array('student', $exception->guards())) { 
+            return redirect()->guest('student/login');
+        }
+        return redirect()->guest(route('login'));
     }
 }

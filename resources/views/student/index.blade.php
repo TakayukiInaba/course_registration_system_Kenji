@@ -6,7 +6,7 @@
        
 <div class="row">
     <!--メニューリスト-->  
-    <div class="col-sm-2 order-1" style="height:250px">
+    <div class="col-sm-2 order-1">
         <h6>こんにちは{{$student->first_name}}さん</h6>
         <ul>
             <li><a href="{{route('student.entry')}}">受講講座登録</a></li>
