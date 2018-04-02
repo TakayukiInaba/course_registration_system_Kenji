@@ -12,7 +12,7 @@
   </head>
   <body>
     <nav class="navbar navbar-expand navbar-dark fixed-top d-print-none">
-      <a class="navbar-brand" href="{{route('top')}}">進学講習システム</a>
+      <a class="navbar-brand" href="#">進学講習システム</a>
       <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="ナビゲーションの切替">
           <span class="navbar-toggler-icon"></span>
       </button>
