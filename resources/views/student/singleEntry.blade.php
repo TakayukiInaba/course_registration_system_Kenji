@@ -1,4 +1,4 @@
-﻿@extends('layouts.main')
+﻿@extends('layouts.stMain')
 
 @section('content')
 <div  class="container-fluid">
@@ -42,9 +42,9 @@
                                 <input class="form-check-input" id="{{$item->id}}" type="radio" name="entry" value="{{ $item->id }}" @if($item->id==$id)checked="checked"@endif>
                             </td>
                             <td><label class="form-check-label" for="{{$item->id}}">{{ $item->title}}</label></td>
-                            <td><label class="form-check-label" for="{{$item->id}}">{{ $item->getGradeVal() }}</lavel></td>
-                            <td><label class="form-check-label" for="{{$item->id}}">{{ $item->getLevelVal() }}</lavel></td>
-                            <td><label class="form-check-label" for="{{$item->id}}">{{ $item->getTeacherVal() }}</lavel></td>
+                            <td><label class="form-check-label" for="{{$item->id}}">{{ $item->getGradeVal() }}</label></td>
+                            <td><label class="form-check-label" for="{{$item->id}}">{{ $item->getLevelVal() }}</label></td>
+                            <td><label class="form-check-label" for="{{$item->id}}">{{ $item->getTeacherVal() }}</label></td>
                         
                         </div>
                         <td>

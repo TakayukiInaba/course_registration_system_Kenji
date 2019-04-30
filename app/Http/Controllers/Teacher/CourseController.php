@@ -1,9 +1,10 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Teacher;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\AddRequest;
 use illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 use App\Term;
 use App\Time;
 use App\Subject;
@@ -18,61 +19,46 @@ use Validator;
 
 class CourseController extends Controller
 {
-    //‹³ˆõ—p‚Ìƒgƒbƒv‰æ–Ê•\¦
-    public function index(Request $request){
+    //æ–°è¦ã«è¬›ç¿’ã‚’è¿½åŠ ã™ã‚‹ç”»é¢è¡¨ç¤ºã€‚
+     public function add(){
+        //formã®è¨­å®šã«ã¤ã„ã¦ã¯App\couposers\formcomposerã‚’å‚ç…§ã›ã‚ˆã€‚â†ã‚‚ã¯ã‚„ä½¿ã†å¿…è¦ãªã„ï¼Ÿ
         $user = Auth::user();
-        $items = Course::where('subject_id',$user->subject_id)->orderBy('term_id', 'asc')->orderBy('time_id', 'asc')->get();
-        return view('course.index',['items'=> $items,'first_name'=>$user->first_name]);  
+        $items = Course::with(['term', 'time','subject','level','grade','teacher'])->where('subject_id',$user->subject_id)->orderBy('term_id', 'asc')->orderBy('time_id', 'asc')->get();
+        return view('teacher.course.add',['items'=> $items,]);
     }
-
-    //V‹K“o˜^‰æ–Ê‚Ì•\¦
-    public function add(){
-        //view“à‚Ìselect.option‚ÍHttp\Composers\FormComposer‚É‚Ä—pˆÓB
-        $user = Auth::user();
-        $items = Course::where('subject_id',$user->subject_id)->orderBy('term_id', 'asc')->orderBy('time_id', 'asc')->get();
-        return view('course.add',['items'=> $items,]);
-    }
-    //“o˜^ˆ—
     public function addpost(AddRequest $request){
-        //ƒoƒŠƒf[ƒVƒ‡ƒ“‚ÍRequests/AddRequestQÆ
+        //ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³ã«ã¤ã„ã¦ã¯Requests/AddRequestã‚’å‚ç…§ã€‚â†ã‚‚ã¯ã‚„å¿…è¦ãªã„ï¼Ÿ
         $course = new Course;
         $params = $request->all();
         unset($params['_token']);
         $course->fill($params)->save();
-        return redirect('/add'); 
+        return redirect(route('teacher.add'));
     }
 
 
 
     public function edit(Request $request){
-    //$request‚É‚ÍC³‚µ‚½‚¢Course‚ÌID‚ª“ü‚Á‚Ä‚¢‚éB
-    //view“à‚Ìselect.option‚ÍHttp\Composers\FormComposer‚É‚Ä—pˆÓB
+        //viewå†…ã®select.optionã«ã¤ã„ã¦ã¯Http\Composers\FormComposerã‚’å‚ç…§ã€‚â†ã‚‚ã¯ã‚„å¿…è¦ãªã„ï¼Ÿ
        $course = Course::find($request->id);
-       return view('course.edit',['tgtCourse'=>$course]); 
+       return view('teacher.course.edit',['tgtCourse'=>$course]); 
     }
-
     public function update(Request $request){
-        //ƒoƒŠƒf[ƒVƒ‡ƒ“ƒ‹[ƒ‹‚Í(addrequest‚Ì“à—e+idƒoƒŠƒf[ƒVƒ‡ƒ“)‚ÍCourseƒ‚ƒfƒ‹QÆ
         $validator = Validator::make($request->all(),Course::$rules,Course::$messages);
         if ($validator->fails()){
-            return redirect("edit/$request->id")->withErrors($validator);
+            return redirect("teacher/edit/$request->id")->withErrors($validator);
         }
-
-        //XVˆ—
         $course = Course::find($request->id);
         $params = $request->all();
         unset($params['_token']);
         $course->fill($params)->save();
-        return redirect('/add'); 
+        return redirect('teacher/add'); 
      }
 
-    //ŠÔŠ„‰æ–Ê•\¦
+    //æ™‚é–“å‰²ã®ä½œæˆ
     public function table(){
-        //view“à‚Ìselect.option‚ÍHttp\Composers\FormTableComposer‚É‚Ä—pˆÓB
-        return view('course.table');
+        //viewã®select.optionã®ä¸­èº«ã¯Http\Composers\FormTableComposerã‚’å‚ç…§ã€‚
+        return view('teacher.course.table');
     }
-
-
     public function tablepost(Request $request){
         $terms = Term::all();
         $times = Time::all();
@@ -84,7 +70,7 @@ class CourseController extends Controller
         {
             foreach ($times as $time)
             { 
-                //ƒtƒH[ƒ€‚É‚æ‚éŠw”NA‹³‰È‚Ìw’è‚æ‚Á‚ÄğŒ•ªŠò
+                //ï¿½tï¿½Hï¿½[ï¿½ï¿½ï¿½É‚ï¿½ï¿½wï¿½Nï¿½Aï¿½ï¿½ï¿½È‚Ìwï¿½ï¿½ï¿½ï¿½ï¿½Äï¿½ï¿½ï¿½ï¿½
                if ($subject == 0 and $grade == 0){
                     $items += array($term->id.$time->id => Course::tableTerm($term->id)->tableTime($time->id)->get());
                }elseif($grade <> 0 and $subject == 0){
@@ -97,25 +83,25 @@ class CourseController extends Controller
             }
         }
         
-        return view('course.tablepost',['terms'=>$terms,'times'=>$times,'items'=>$items,]);
+        return view('teacher.course.tablepost',['terms'=>$terms,'times'=>$times,'items'=>$items,]);
     }
     
     public function list(Request $request){
             $user = Auth::user();
             $items = Course::where('subject_id',$user->subject_id)->orderBy('term_id', 'asc')->orderBy('time_id', 'asc')->withCount('entries')->get();
-            return view('course.list',['items'=> $items]);  
+            return view('teacher.course.list',['items'=> $items]);  
     }
 
     public function postList($id){
         $user = Auth::user();
         $items = Course::where('id',$id)->with('entries.student')->get();
-        return view('course.postList',['items'=> $items]);  
+        return view('teacher.course.postList',['items'=> $items]);  
     }
 
     public function cancel(){
         $user = Auth::user();
         $items = Course::where('subject_id',$user->subject_id)->orderBy('term_id', 'asc')->orderBy('time_id', 'asc')->withCount('entries')->get();
-        return view('course.cancel',['items'=> $items]); 
+        return view('teacher.course.cancel',['items'=> $items]); 
     }   
 
     public function confirmCancel(Request $request){
@@ -124,20 +110,19 @@ class CourseController extends Controller
         {
              $cancels[] = Course::find($cancelNum);  
         }
-        return view('course.confirm',['cancels'=>$cancels,]);
+        return view('teacher.course.confirm',['cancels'=>$cancels,]);
     }
 
     public function postCancel(Request $request){
         foreach ($request->input('cancelNums') as $cancelNum)
         {
-            //entriesƒe[ƒuƒ‹‚Ìˆ—
-            //courseƒe[ƒuƒ‹‚Ìˆ—
+            //entriesï¿½eï¿½[ï¿½uï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½
+            //courseï¿½eï¿½[ï¿½uï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½
             Entry::where('course_id',$cancelNum)->delete();    
             Course::where('id',$cancelNum)->delete();    
         }
         
-        $message = 'íœ‚ªŠ®—¹‚µ‚Ü‚µ‚½B';
-        return view('components.thanks',['message'=>$message,]);     
+        return view('teacher.thanks');     
     }  
 
 }

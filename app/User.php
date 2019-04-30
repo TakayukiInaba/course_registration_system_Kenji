@@ -7,8 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
-
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -17,6 +16,20 @@ class User extends Authenticatable
     protected $fillable = [
         'first_name','name', 'email','subject_id','password'
     ];
+
+     /**
+     * バリデーション用ルール設定
+     *
+     * @var array
+     */
+    public static $rules = [
+        'name' => 'required|max:10',
+        'first_name' => 'required|max:10',
+        'email' => 'required|email|max:80|unique:students,email',
+        'subject_id' => 'required|digits:1',
+        'password' => 'required|confirmed|between:6,30',
+    ];
+
 
     /**
      * The attributes that should be hidden for arrays.
@@ -28,13 +41,6 @@ class User extends Authenticatable
     ];
 
     //subjectモデルからuserの教科を特定するためのメソッド
-    public function subject()
-    {
-        return $this->belongsTo('App\Subject');
-    }
-    public function getSbjVal()
-    {
-        return $this->subject->value;
-    }
+    
 
 }

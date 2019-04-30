@@ -12,10 +12,11 @@ class Entry extends Model
     protected $fillable = [
         'student_id','course_id','term_id','time_id','created_at' , 'updated_at'
     ];
+    protected $dates = ['deleted_at'];
 
     //講座マスタとのリレーション作成
     public function course(){
-        return $this->belongsTo('App\Course');
+        return $this->belongsTo('App\Course')->withTrashed();
     }
     public function Term(){
         return $this->belongsTo('App\Term');
@@ -56,13 +57,13 @@ class Entry extends Model
         return $this->belongsTo('App\Student');
     }
     public function getStudentId(){
-        return $this->student->student_id;
+        return $this->student->username;
     }
     public function getStudentName(){
         return $this->student->name;
     }
-    public function getStudentFirstName(){
-        return $this->student->first_name;
+    public function getStudentLastName(){
+        return $this->student->last_name;
     }
 
 }

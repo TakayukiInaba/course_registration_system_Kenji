@@ -24,12 +24,12 @@ class SubjectsTableSeeder extends Seeder
         DB::table('subjects')->insert($param);
 
         $param = [
-            'value' => '理科'
+            'value' => '数学'
         ];
         DB::table('subjects')->insert($param);
 
         $param = [
-            'value' => '数学'
+            'value' => '理科'
         ];
         DB::table('subjects')->insert($param);
 

@@ -24,8 +24,9 @@ class LoginController extends Controller
     protected function validateLogin(Request $request)
     {
         $messages = [
-            $this->username().'.required' =>'ログインIDを入力してください。',
-            'password.required' => 'パスワードを入力してください。',    
+            $this->username().'.required' =>'学籍番号を入力してください。',
+            $this->username().'.digits_between:5,6' => '学籍番号を正確に入力してください。', 
+            'password' =>'required|string',
         ];
 
         $this->validate($request,[
@@ -39,7 +40,7 @@ class LoginController extends Controller
     */
     public function username()
     {
-        return 'email';
+        return 'username';
     }
 
     /**
@@ -47,7 +48,7 @@ class LoginController extends Controller
     */
     public function logout(Request $request)
     {
-        $partialLogin = auth('user')->guest() || auth('student')->guest();
+        $partialLogin = auth('teacher')->guest() || auth('student')->guest();
             $this->guard()->logout();
 
             //どちらか片方のみでログインしている時のみ、invalidateする

@@ -11,26 +11,18 @@
     <link rel="stylesheet" href="{{asset('/css/style.css')}}">
   </head>
   <body>
-    <nav class="navbar navbar-expand navbar-dark fixed-top d-print-none">
-      <a class="navbar-brand" href="#">進学講習システム</a>
-      <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="ナビゲーションの切替">
-          <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <span class="navbar-text ml-auto">
-          <a class="nav-item nav-link btn btn-outline-light" href="#">ログアウト</a>
-        </span>
+    <div id="wrap">
+      <!-- ナブバー設定 -->
+      @yield('navbar')
+
+      <div id="contents" class="container-fluid">
+          @yield('content')
       </div>
-    </nav>
-
-    <div class="container-fluid">
-        @yield('content')
-    </div>
-              
-    <footer class="footer text-light d-print-none">
-            <small>Copyright © SEIJOGAKKO. All Rights Reserved.</small>
-    </footer>
-
+                  
+      <footer class="footer text-light d-print-none">
+        <small>Copyright © SEIJOGAKKO. All Rights Reserved.</small>
+      </footer>
+    </div><!-- wrap -->
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

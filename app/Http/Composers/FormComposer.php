@@ -22,11 +22,10 @@ class FormComposer
         $grades = Grade::all();
         $levels = Level::all();
         $user = Auth::user();
-        $optSbj = [$user->subject_id => $user->getSbjVal()]; 
+        $optSbj = [$user->subject_id => $user->getSubjectVal()]; 
         //"getSbjVal"->subjectモデルからuserの教科を特定するためのメソッド
-        $subject = Subject::find($user->subject_id);
+        $teachers = Teacher::where('subject_id', $user->subject_id)->get();
       
-
         $optTerms = array();
         $optTimes = array();
         $optGrades = array();
@@ -46,8 +45,8 @@ class FormComposer
         foreach ($levels as $item){
             $optLevels += array($item->id => $item->value);
         }
-        foreach ($subject->teachers as $obj){
-            $optTeachers += array($obj->id => $obj->value);
+        foreach ($teachers as $item){
+            $optTeachers += array($item->id => $item->value.$item->name);
         }
         
         $view->with(['optTerms'=>$optTerms,

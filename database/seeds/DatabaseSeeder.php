@@ -11,31 +11,36 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\User::class)->create(
-            ['first_name' => '自分', 
-             'name'      => '自分',
+        factory(App\Teacher::class)->create(
+            ['value' => '稲葉', 
+             'name'      => '崇将',
              'email'     => 'bainabainabaina1783@gmail.com',
-             'subject_id' => '1', 
+             'subject_id' => '1',
+             'position_id'  => '1' 
             ]);
-            factory(App\User::class,9)->create();
+            factory(App\Teacher::class,10)->create();
 
         factory(App\Student::class)->create(
-            ['first_name' => '自分', 
-             'name'      => '自分',
-             'email'     => 'bainabainabaina1783@gmail.com',
-             'student_id' => '1', 
+            ['username' => '00000',
+             'grade_class_number' => '000000', 
+             'last_name' => '赤坂', 
+             'name'      => '太郎', 
             ]);
-        factory(App\Student::class,1000)->create();
-        factory(App\Entry::class,2000)->create();
-        factory(App\Course::class,200)->create();
 
-        // $this->call(UsersTableSeeder::class);
+        factory(App\Admin::class)->create(
+            ['username' => 'takayuki', 
+             'password' => bcrypt('shingakuAdmin'),
+            ]);
+
+        factory(App\Course::class,200)->create();
+        
+        
         $this->call(SubjectsTableSeeder::class);
         $this->call(TermsTableSeeder::class);
         $this->call(TimesTableSeeder::class);
         $this->call(GradesTableSeeder::class);
         $this->call(LevelsTableSeeder::class);
-        $this->call(TeachersTableSeeder::class);
+        $this->call(PositionsTableSeeder::class);
         $this->call(CoursesTableSeeder::class);
 
     }

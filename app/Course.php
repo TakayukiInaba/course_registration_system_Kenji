@@ -9,6 +9,7 @@ class Course extends Model
 {
     use SoftDeletes;
     protected $guarded = array('id');
+    protected $dates = ['deleted_at'];
 
     //バリデーションルールとメッセージ
     public static $rules = [
@@ -84,20 +85,11 @@ class Course extends Model
     }
     
 
-
-    //userテーブル
-    public function user(){
-        return $this->belongsTo('App\User');
-    }
-    public function getUserFstName(){
-        return $this->user->first_name;
-    }
-
     /*
     *各講座にエントリーしている全生徒を関連付ける
     */
     public function entries(){
-        return $this->hasMany('App\Entry');
+        return $this->hasMany('App\Entry')->withTrashed();
     }
 
 

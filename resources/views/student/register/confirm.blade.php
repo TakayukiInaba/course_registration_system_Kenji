@@ -1,76 +1,60 @@
 ﻿@extends('layouts.login')
 
+@section('title','新規登録')
+
+@section('navbar')
+    <nav class="navbar navbar-expand navbar-dark fixed-top d-print-none">
+        <a class="navbar-brand" href="#">進学講習システム</a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="ナビゲーションの切替">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <span class="navbar-text ml-auto">
+            <a class="nav-item nav-link btn btn-outline-light" href="{{route('student.login')}}">ログイン</a>
+        </span>
+        </div>
+    </nav>
+@endsection
+
 @section('content')
-<div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">生徒用新規登録画面</div>
+        <div class="col-4 offset-4">
+            <form class="form-horizontal" method="POST">
+            {{ csrf_field() }}
+                <h4>下の内容で登録します。よろしいでしょうか？</h4>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th scope="row">姓</th>
+                                <td>{{ $data['first_name'] }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">名</th>
+                                <td>{{ $data['name'] }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">メールアドレス</th>
+                                <td>{{ $data['email'] }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">学籍番号</th>
+                                <td>{{ $data['student_id'] }}</td>
+                            </tr>
 
-                <div class="panel-body">
-                    <form class="form-horizontal" method="POST">
-                        {{ csrf_field() }}
+                        </tbody>
+                    </table>
 
-                        <!--「姓」(first_name) 入力 !-->
-                        <div class="form-group">
-                            <label for="name" class="col-md-4 control-label">姓</label>
-
-                            <div class="col-md-6">
-                                <strong>{{ $data['first_name'] }}</strong>
-                            </div>
+                    <div class="row justify-content-center">
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary btn-block">
+                                登録
+                            </button>
                         </div>
-
-                        <!--「名」(name) 入力 !-->
-                        <div class="form-group">
-                            <label for="name" class="col-md-4 control-label">名</label>
-
-                            <div class="col-md-6">
-                                <strong>{{ $data['name'] }}</strong>
-                            </div>
+                        <div class="col">
+                            <a class="btn btn-secondary btn-block" role="button" href="{{route('student.register.index')}}" >戻る</a>
                         </div>
-
-                        <div class="form-group">
-                            <label for="email" class="col-md-4 control-label">メールアドレス</label>
-
-                            <div class="col-md-6">
-                                <strong>{{ $data['email'] }}</strong>
-                            </div>
-                        </div>
-
-
-                        <!--「学籍番号」(student_id) 入力 !-->
-                        <div class="form-group">
-                            <label for="student_id" class="col-md-4 control-label">学籍番号</label>
-
-                            <div class="col-md-6">
-                                <strong>{{ $data['student_id'] }}</strong>
-                            </div>
-                        </div>
-
-                        <!--「パスワード」(password) 入力 !-->
-                        <div class="form-group">
-                            <label for="password" class="col-md-4 control-label">パスワード</label>
-
-                            <div class="col-md-6">
-                                <strong>{{ $data['password'] }}</strong>
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    登録
-                                </button>
-                            </div>
-
-                            <div class="col-md-6">
-                                <a class="btn btn-secondary btn-block" role="button" href="{{route('student.register.insdex')}}" >戻る</a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+                    </div>
+            </form>
         </div>
     </div>
 </div>

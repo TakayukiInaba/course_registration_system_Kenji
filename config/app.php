@@ -177,7 +177,10 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,  // 追加
-
+        //Barryvdh\Snappy\ServiceProvider :: class,//追加
+        Barryvdh\DomPDF\ServiceProvider::class,//追加
+        
+        
         /*
          * Package Service Providers...
          */
@@ -242,7 +245,9 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Form' => Collective\Html\FormFacade::class,  // 追加
         'Html' => Collective\Html\HtmlFacade::class,  // 追加
-
+        'PDF' => Barryvdh\DomPDF\Facade::class,
+        //'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        //'SnappyImage'=>Barryvdh\Snappy\Facades\SnappyImage::class,
     ],
 
 ];

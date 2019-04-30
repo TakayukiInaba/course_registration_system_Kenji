@@ -53,7 +53,7 @@ return [
 
         'teacher' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'teachers',
         ],
 
         'admin' => [
@@ -82,9 +82,9 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'teachers' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => App\Teacher::class,
         ],
 
         'students' => [

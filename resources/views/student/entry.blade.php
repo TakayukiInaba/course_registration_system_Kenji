@@ -1,7 +1,7 @@
-﻿@extends('layouts.main')
+﻿@extends('layouts.stMain')
 
 @section('content')
-<div class="container-fluid">
+<div class="container-fluid">  
     <form  method="POST">
     {{ csrf_field() }}
     @foreach($terms as $term)
@@ -31,7 +31,7 @@
                             </td>
                             <td colspan="5">
                                 <label class="form-check-label" for="no_entry">
-                                    ☜この期間に講座を受講しない場合は、左のチェックを入れてください。
+                                    以下のうちから選択してください。
                                 </label>
                             </td>
                         </div>
@@ -40,12 +40,12 @@
                     <tr>
                         <div class="form-check">
                             <td>
-                                <input class="form-check-input" id="{{$item->id}}" type="radio" name="entries[{{ $term->id.$time->id }}]" value="{{ $item->id }}">
+                                <input class="form-check-input" id="{{$item->id}}" type="radio" name="entries[{{ $term->id.$time->id }}]" value="{{ $item->id }}" @if($Collection_of_Entries->contains($item->id))checked="checked"@endif >
                             </td>
                             <td><label class="form-check-label" for="{{$item->id}}">{{ $item->title }}</label></td>
-                            <td><label class="form-check-label" for="{{$item->id}}">{{ $item->getGradeVal() }}</lavel></td>
-                            <td><label class="form-check-label" for="{{$item->id}}">{{ $item->getLevelVal() }}</lavel></td>
-                            <td><label class="form-check-label" for="{{$item->id}}">{{ $item->getTeacherVal() }}</lavel></td>
+                            <td><label class="form-check-label" for="{{$item->id}}">{{ $item->getGradeVal() }}</label></td>
+                            <td><label class="form-check-label" for="{{$item->id}}">{{ $item->getLevelVal() }}</label></td>
+                            <td><label class="form-check-label" for="{{$item->id}}">{{ $item->getTeacherVal() }}</label></td>
                         </div>
                         <td>
                             <button type="button" class="btn btn-default" data-toggle="modal" data-target="#{{$item->title}}">
@@ -61,7 +61,14 @@
     @endforeach 
     @endforeach 
 
-    <button type="submit" class="btn btn-primary btn-block" >登録</button>
+        <div class="row justify-content-center">
+                <div class="col-2">
+                    <button type="submit" class="btn btn-primary btn-block" >登録</button>
+                </div>
+                <div class="col-2">
+                    <a class="btn btn-secondary btn-block" role="button" href="{{route('student.top')}}" >戻る</a>
+                </div>
+        </div>
     </form>
 </div>
 @endsection

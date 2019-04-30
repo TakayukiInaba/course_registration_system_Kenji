@@ -17,8 +17,11 @@ class CreateTeachersTable extends Migration
             $table->increments('id');
             $table->string('value',10);
             $table->string('name',10);
-            $table->string('position',10);
-            $table->string('subject_id',10);
+            $table->unsignedTinyInteger('subject_id');
+            $table->unsignedTinyInteger('position_id');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
         });
     }

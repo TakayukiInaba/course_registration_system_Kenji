@@ -15,9 +15,11 @@ class FormServiceProvider extends ServiceProvider
     public function boot()
     {
         //
-        View::composer('course.add','App\Http\Composers\FormComposer');
-        View::composer('course.edit','App\Http\Composers\FormComposer');
-        View::composer('course.table','App\Http\Composers\FormTableComposer');
+        View::composer('teacher.course.add','App\Http\Composers\FormComposer');
+        View::composer('teacher.course.edit','App\Http\Composers\FormComposer');
+        View::composer('teacher.course.table','App\Http\Composers\FormTableComposer');
+        View::composer('shingaku.editTerm','App\Http\Composers\AdminTermEditComposer');
+        View::composer('shingaku.editTime','App\Http\Composers\AdminTimeEditComposer');
     }
 
     /**

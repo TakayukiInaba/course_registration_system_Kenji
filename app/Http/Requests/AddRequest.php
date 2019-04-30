@@ -13,7 +13,7 @@ class AddRequest extends FormRequest
      */
      public function authorize()
      {
-         if ($this->path() == 'add'){
+         if ($this->path() == 'teacher/add'){
              return true;
          }else{
              return false;

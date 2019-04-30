@@ -9,7 +9,7 @@
         </button>
       </div>
       <div class="modal-body">
-        @if($entries[$term->id.$time->id]["title"] == "登録なし")
+        @if($entries[$term->id.$time->id]["title"] == "")
           <p>この時期で講座を受講したい場合は、下の「登録更新」ボタンをおしてください。↓</p>
         @else
           <p>対象生徒：{{$entries[$term->id.$time->id]["grade"]}} {{$entries[$term->id.$time->id]["level"]}}<br>

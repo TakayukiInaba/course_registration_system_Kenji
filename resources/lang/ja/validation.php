@@ -82,7 +82,7 @@ return [
     ],
     'string'               => ':attributeには文字列を指定してください。',
     'timezone'             => ':attributeには正しい形式のタイムゾーンを指定してください。',
-    'unique'               => 'その:attributeはすでに使われています。',
+    'unique'               => 'あなたが入力した:attributeはすでに使われています。',
     'uploaded'             => ':attributeのアップロードに失敗しました。',
     'url'                  => ':attributeには正しい形式のURLを指定してください。',
     /*
@@ -111,7 +111,7 @@ return [
     |
     */
     'attributes' => ['name' => '名前',
-                     'first_name' => '名字',
+                     'last_name' => '苗字',
                      'email' => 'メールアドレス',
                      'student_id' => '学籍番号',
                      'password' => 'パスワード'],
