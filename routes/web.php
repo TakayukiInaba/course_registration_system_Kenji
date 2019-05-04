@@ -134,7 +134,8 @@ Route::prefix('shingaku')->namespace('Admin')->as('shingaku.')->group(function()
          Route::get('job/feellist','JobmanagementController@feeList')->name('feelist');
          Route::get('job/feelist/export/pdf','JobmanagementController@feeListExportPdf')->name('feelist.export.pdf');
          Route::get('job/feelist/export/excel','JobmanagementController@feeListExportExcel')->name('feelist.export.excel');
-         
+         Route::get('job/courseslist','JobmanagementController@csvOutput')->name('courseslist');
+         Route::get('job/courseslist/export/excel','JobmanagementController@coursesListExportExcel')->name('courseslist.export.excel');
     //});
 });
 

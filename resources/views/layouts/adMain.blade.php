@@ -62,7 +62,7 @@
                         <div class="list-group　list-group-flush">   
                             <a class="list-group-item list-group-item-action" href="{{route('shingaku.cancellist')}}">不開講講座受講者リスト</a>
                             <a class="list-group-item list-group-item-action" href="{{route('shingaku.feelist')}}">教材費請求リスト</a>
-                            <a class="list-group-item list-group-item-action" href="{{route('shingaku.cancellist')}}">教室割作成用CSV出力</a>
+                            <a class="list-group-item list-group-item-action" href="{{route('shingaku.courseslist')}}">教室割作成用CSV出力</a>
                             <a class="list-group-item list-group-item-action" href="{{route('shingaku.cancellist')}}">給与計算</a>
                         </div>
                     </div><!-- /.collapse -->

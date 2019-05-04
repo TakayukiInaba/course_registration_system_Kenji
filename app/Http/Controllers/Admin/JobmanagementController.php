@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Exports\canceledEntriesExport;
 use App\Exports\FeeEntriesExport;
+use App\Exports\CoursesExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\DB;
 use App\Entry;
+use App\Course;
 use PDF;
 
 class JobmanagementController extends Controller
@@ -67,10 +69,22 @@ class JobmanagementController extends Controller
 
     public function feeListExportExcel(){
         return Excel::download(new FeeEntriesExport, 'feeEntries.csv');
-        // return (new FeeEntriesExport)->download('FeeEntries.csv');
      }
 
+     
+     public function csvOutput(){
+        $entries = Course::with(['term', 'time','subject','level','grade','teacher'])->withCount('entries') 
+        ->orderBy("term_id")->orderBy("time_id")->orderBy("subject_id")->orderBy("grade_id")->orderBy("time_id")
+        ->get();
+        
+        return view('shingaku.csvoutput',['Entries'=>$entries]); 
 
+    }
+
+    public function coursesListExportExcel(){
+        return Excel::download(new CoursesExport, 'Courses.csv');
+     }
+    
 
 }
 
